@@ -15,6 +15,11 @@ void Tree::print()
     printTree(root);
 }
 
+void Tree::printFile(QTextStream &stream)
+{
+    printTreeFile(root, stream);
+}
+
 void Tree::printTree(Node *root)
 {
     if (root == nullptr) {
@@ -25,6 +30,31 @@ void Tree::printTree(Node *root)
     printTree(root->left);
     printTree(root->right);
 }
+
+void Tree::printTreeFile(Node *root, QTextStream &stream)
+{
+    if (root == nullptr)
+        return;
+
+    stream << root->number << " ";
+    if (root->left == nullptr && root->right == nullptr) {
+        stream << endl;
+        return;
+    }
+    else if (root->left != nullptr && root->right == nullptr) {
+        stream << root->left->number << endl;
+    }
+    else if (root->left == nullptr && root->right != nullptr) {
+        stream << root->right->number << endl;
+    }
+    else {
+        stream << root->left->number << " " << root->right->number << endl;
+    }
+
+    printTreeFile(root->left, stream);
+    printTreeFile(root->right, stream);
+}
+
 
 void Tree::addNumber(int number)
 {
@@ -134,3 +164,4 @@ Node *Tree::findLeftSubTree(Node *root, int number)
     }
     return pom;
 }
+

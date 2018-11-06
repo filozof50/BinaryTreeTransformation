@@ -2,6 +2,7 @@
 #define TREE_H
 
 #include <iostream>
+#include <QTextStream>
 
 struct Node {
     int number;
@@ -15,8 +16,10 @@ public:
     Tree();
     ~Tree();
     void printTree(Node *root);
+    void printTreeFile(Node *root, QTextStream &stream);
     void addNumber(int number);
     void print();
+    void printFile(QTextStream &stream);
     void addNode(Node **root, int number);
     Node *getRoot() { return root; }
     void freeTree(Node *root);
@@ -32,3 +35,4 @@ private:
 };
 
 #endif // TREE_H
+
