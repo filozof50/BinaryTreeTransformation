@@ -32,8 +32,8 @@ int main()
     QFile file3(filename3);
     QFile file4(filename4);
 
-    if ( file1.open(QIODevice::ReadWrite) && file2.open(QIODevice::ReadWrite)
-         && file3.open(QIODevice::ReadWrite) && file4.open(QIODevice::ReadWrite) )
+    if ( file1.open(QIODevice::ReadWrite | QIODevice::Truncate) && file2.open(QIODevice::ReadWrite | QIODevice::Truncate)
+         && file3.open(QIODevice::ReadWrite | QIODevice::Truncate) && file4.open(QIODevice::ReadWrite | QIODevice::Truncate) )
     {
         QTextStream stream1( &file1 );
         QTextStream stream2( &file2 );
