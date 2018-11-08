@@ -32,10 +32,8 @@ void Tree::printTree(Node *root)
 }
 
 void Tree::writeToFile(int &i) {
-    std::string name = "graph";
-    std::string extension = ".txt";
-    std::string result = name + std::to_string(i) + extension;
-    QString filename = result.c_str();
+    std::string name = "graph" + std::to_string(i) + ".txt";
+    QString filename = name.c_str();
     QFile file(filename);
     i++;
 

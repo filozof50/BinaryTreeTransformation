@@ -79,7 +79,8 @@ int main()
     delete t;
     delete t2;
 
-//    system("python draw_graph.py");
+    string command = "python draw_graph.py " + to_string(i);
+    system(command.c_str());
     return 0;
 }
 
