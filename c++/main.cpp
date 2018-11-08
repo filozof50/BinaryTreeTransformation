@@ -66,7 +66,7 @@ int main()
 
 //    t->printFile(stream);
     t->writeToFile(i);
-    t->writeToFile(i);
+    t2->writeToFile(i);
 //    t2->printFile(stream4);
 
 

@@ -10,7 +10,7 @@ if len(sys.argv) != 2:
 
 numberOfTxtFiles = sys.argv[1];
 
-for i in range(1, int(numberOfTxtFiles) + 1):
+for i in range(1, int(numberOfTxtFiles)):
 	graph = pydot.Dot(graph_type='graph');
 
 	with open("./graph" + str(i) + ".txt") as f:

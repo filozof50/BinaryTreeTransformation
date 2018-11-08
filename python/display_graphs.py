@@ -38,7 +38,7 @@ canvas.config(background = "white");
 
 images = [];
 
-for i in range(1, int(numberOfTxtFiles) + 1):
+for i in range(1, int(numberOfTxtFiles)):
 	image = Image.open("graph" + str(i) + ".png");
 	if i == 1 or i == 2:
 		basewidth = root.winfo_width()/5;
