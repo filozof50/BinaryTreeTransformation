@@ -16,13 +16,14 @@ struct Node {
 class Tree
 {
 public:
+    static int counter;
     Tree();
     ~Tree();
     void printTree(Node *root);
     void printTreeFile(Node *root, QTextStream &stream);
     void addNumber(int number);
     void print();
-    void writeToFile(int &i);
+    void writeToFile();
     void printFile(QTextStream &stream);
     void addNode(Node **root, int number);
     Node *getRoot() { return root; }
@@ -36,6 +37,7 @@ public:
 
 private:
     Node *root;
+
 };
 
 #endif // TREE_H

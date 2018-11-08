@@ -65,8 +65,8 @@ int main()
     int i = 1;
 
 //    t->printFile(stream);
-    t->writeToFile(i);
-    t2->writeToFile(i);
+    t->writeToFile();
+    t2->writeToFile();
 //    t2->printFile(stream4);
 
 
@@ -79,7 +79,7 @@ int main()
     delete t;
     delete t2;
 
-    string command = "python draw_graph.py " + to_string(i);
+    string command = "python draw_graph.py " + to_string(Tree::counter);
     system(command.c_str());
     return 0;
 }

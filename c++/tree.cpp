@@ -1,5 +1,7 @@
 #include "tree.h"
 
+int Tree::counter = 1;
+
 Tree::Tree()
 {
     root = nullptr;
@@ -31,11 +33,11 @@ void Tree::printTree(Node *root)
     printTree(root->right);
 }
 
-void Tree::writeToFile(int &i) {
-    std::string name = "graph" + std::to_string(i) + ".txt";
+void Tree::writeToFile() {
+    std::string name = "graph" + std::to_string(Tree::counter) + ".txt";
     QString filename = name.c_str();
     QFile file(filename);
-    i++;
+    Tree::counter++;
 
     if ( file.open(QIODevice::ReadWrite | QIODevice::Truncate) ){
         QTextStream stream( &file );
@@ -120,6 +122,7 @@ void Tree::rotateRight()
 {
     while (root->left) {
         rotateOnce(&root);
+        writeToFile();
     }
     Node *rootPom1 = root;
     Node *rootPom2 = root->right;
@@ -132,12 +135,13 @@ void Tree::rotateRight()
         rootPom1 = rootPom1->right;
         if (rootPom2)
             rootPom2 = rootPom2->right;
+        writeToFile();
     }
 }
 
 void Tree::rotateLeftOnce(Node **root, Node *root2)
 {
-    if (!root2 || (!root2->left && !root2->right))
+    if (!root2)
         return ;
 
     if (root2->left) {
@@ -145,6 +149,7 @@ void Tree::rotateLeftOnce(Node **root, Node *root2)
         Node *pom2 = findLeftSubTree(*root, root2->number);
         *root = pom;
         (*root)->left = pom2;
+        writeToFile();
     }
     rotateLeftOnce(&(*root)->left, root2->left);
     rotateLeftOnce(&(*root)->right, root2->right);
