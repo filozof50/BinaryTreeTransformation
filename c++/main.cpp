@@ -62,17 +62,12 @@ int main()
 //    t2->addNumber(4);
 //    t2->addNumber(1);
 
-    int i = 1;
-
-//    t->printFile(stream);
     t->writeToFile();
     t2->writeToFile();
-//    t2->printFile(stream4);
 
 
     t->rotateRight();
     t->rotateLeft(*t2);
-//    t->printFile(stream3);
 
     cout << jednaka(t->getRoot(), t2->getRoot()) << endl;
 
