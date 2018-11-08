@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <QTextStream>
+#include <QIODevice>
+#include <QFile>
+#include <QString>
 
 struct Node {
     int number;
@@ -19,6 +22,7 @@ public:
     void printTreeFile(Node *root, QTextStream &stream);
     void addNumber(int number);
     void print();
+    void writeToFile(int &i);
     void printFile(QTextStream &stream);
     void addNode(Node **root, int number);
     Node *getRoot() { return root; }

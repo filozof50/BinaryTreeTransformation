@@ -31,6 +31,23 @@ void Tree::printTree(Node *root)
     printTree(root->right);
 }
 
+void Tree::writeToFile(int &i) {
+    std::string name = "graph";
+    std::string extension = ".txt";
+    std::string result = name + std::to_string(i) + extension;
+    QString filename = result.c_str();
+    QFile file(filename);
+    i++;
+
+    if ( file.open(QIODevice::ReadWrite | QIODevice::Truncate) ){
+        QTextStream stream( &file );
+
+        printFile(stream);
+
+        file.close();
+    }
+}
+
 void Tree::printTreeFile(Node *root, QTextStream &stream)
 {
     if (root == nullptr)
