@@ -15,14 +15,34 @@ class DrawImage:
 	    self.y = y;
             self.images = images;
             self.canvas = canvas;
-            self.image = self.images.pop(0);
+	    self.counter = 0;
+            #self.image = self.images.pop(0);
+	    self.image = self.images[self.counter];
             self.canvas.create_image((self.x, self.y), tags = "deleteMe", image = self.image, anchor='center');
-            self.canvas.after(5000, self.draw_new);
-
+            
         def draw_new(self):
-            if len(self.images) > 0:
-                self.image = self.images.pop(0);
+	    if (self.counter + 1 <= len(self.images) - 1):
+	    	self.counter += 1
+            if self.counter < len(self.images):
+                #self.image = self.images.pop(0);
+		self.image = self.images[self.counter];
                 self.canvas.delete("deleteMe");
+                self.canvas.create_image((self.x, self.y), tags = "deleteMe", image = self.image, anchor='center');
+
+        def draw_previous(self):
+	    if (self.counter - 1 >= 0):
+	    	self.counter -= 1
+	    if self.counter >= 0:
+		self.image = self.images[self.counter];
+                self.canvas.delete("deleteMe");
+                self.canvas.create_image((self.x, self.y), tags = "deleteMe", image = self.image, anchor='center');
+                
+        def draw_new_timer(self):
+	    if (self.counter + 1 <= len(self.images) - 1):
+	    	self.counter += 1
+	    if self.counter < len(self.images):
+                self.image = self.images[self.counter];
+		self.canvas.delete("deleteMe");
                 self.canvas.create_image((self.x, self.y), tags = "deleteMe", image = self.image, anchor='center');
                 self.canvas.after(5000, self.draw_new);
 
@@ -63,5 +83,21 @@ canvas.create_image((0, 0), image = firstLastImage[0], anchor='nw');
 canvas.create_image((root.winfo_width(), 0), image = firstLastImage[1], anchor='ne');
 
 drawer = DrawImage(canvas, images, root.winfo_width()/2, root.winfo_height()/2);
+
+button0 = Button(root, text = "Previous", command = drawer.draw_previous, anchor = W)
+button0.configure(width = 10, activebackground = "#33B5E5", relief = RAISED)
+button0_window = canvas.create_window(0, root.winfo_height(), anchor=SW, window=button0)
+
+button1 = Button(root, text = "Next", command = drawer.draw_new, anchor = W)
+button1.configure(width = 10, activebackground = "#33B5E5", relief = RAISED)
+button1_window = canvas.create_window(120, root.winfo_height(), anchor=SW, window=button1)
+
+button2 = Button(root, text = "Loop", command = drawer.draw_new_timer, anchor = W)
+button2.configure(width = 10, activebackground = "#33B5E5", relief = RAISED)
+button2_window = canvas.create_window(240, root.winfo_height(), anchor=SW, window=button2)
+
+button3 = Button(root, text = "Exit", command = root.quit, anchor = W)
+button3.configure(width = 10, activebackground = "#33B5E5", relief = RAISED)
+button3_window = canvas.create_window(360, root.winfo_height(), anchor=SW, window=button3)
 
 root.mainloop();
