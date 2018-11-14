@@ -17,14 +17,14 @@ class DrawImage:
             self.canvas = canvas;
             self.image = self.images.pop(0);
             self.canvas.create_image((self.x, self.y), tags = "deleteMe", image = self.image, anchor='center');
-            self.canvas.after(3000, self.draw_new);
+            self.canvas.after(5000, self.draw_new);
 
         def draw_new(self):
             if len(self.images) > 0:
                 self.image = self.images.pop(0);
                 self.canvas.delete("deleteMe");
                 self.canvas.create_image((self.x, self.y), tags = "deleteMe", image = self.image, anchor='center');
-                self.canvas.after(3000, self.draw_new);
+                self.canvas.after(5000, self.draw_new);
 
 root = Tk();
 root.title("Balls");
@@ -39,7 +39,7 @@ canvas.config(background = "white");
 images = [];
 
 for i in range(1, int(numberOfTxtFiles)):
-	image = Image.open("graph" + str(i) + ".png");
+	image = Image.open("../files/png_files/graph" + str(i) + ".png");
 	if i == 1 or i == 2:
 		basewidth = root.winfo_width()/5;
 		wpercent = (basewidth/float(image.size[0]));

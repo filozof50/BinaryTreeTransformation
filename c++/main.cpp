@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sys/stat.h>
 #include "tree.h"
 
 using namespace std;
@@ -19,6 +20,11 @@ int jednaka (Node *g1, Node *g2)
 
 int main()
 {
+    mkdir("../files", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    mkdir("../files/txt_files", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    mkdir("../files/dot_files", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    mkdir("../files/png_files", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+
     Tree *t = new Tree();
     Tree *t2 = new Tree();
 
@@ -74,7 +80,7 @@ int main()
     delete t;
     delete t2;
 
-    string command = "python draw_graph.py " + to_string(Tree::counter);
+    string command = "python ../python/draw_graph.py " + to_string(Tree::counter);
     system(command.c_str());
     return 0;
 }
