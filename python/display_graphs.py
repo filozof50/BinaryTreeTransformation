@@ -37,6 +37,7 @@ canvas.config(background = "white");
 
 
 images = [];
+firstLastImage = [];
 
 for i in range(1, int(numberOfTxtFiles)):
 	image = Image.open("../files/png_files/graph" + str(i) + ".png");
@@ -44,23 +45,22 @@ for i in range(1, int(numberOfTxtFiles)):
 		basewidth = root.winfo_width()/5;
 		wpercent = (basewidth/float(image.size[0]));
 		hsize = int((float(image.size[1])*float(wpercent)));
-		image = image.resize((basewidth, hsize), Image.ANTIALIAS);
-	else:
-		baseheight = 11*root.winfo_height()/12;
-		hpercent = (baseheight/float(image.size[1]));
-		wsize = int((float(image.size[0])*float(hpercent)));
-		image = image.resize((wsize, baseheight), Image.ANTIALIAS);
+		img = image.resize((basewidth, hsize), Image.ANTIALIAS);
+		img = ImageTk.PhotoImage(img);
+		firstLastImage.append(img);
+	
+	baseheight = 11*root.winfo_height()/12;
+	hpercent = (baseheight/float(image.size[1]));
+	wsize = int((float(image.size[0])*float(hpercent)));
+	image = image.resize((wsize, baseheight), Image.ANTIALIAS);
 
 	image = ImageTk.PhotoImage(image);
 	
 	if i != 2:
 		images.append(image);
-	else:
-		lastImage = image;
 
-firstImage = images[0];
-canvas.create_image((0, 0), image = firstImage, anchor='nw');
-canvas.create_image((root.winfo_width(), 0), image = lastImage, anchor='ne');
+canvas.create_image((0, 0), image = firstLastImage[0], anchor='nw');
+canvas.create_image((root.winfo_width(), 0), image = firstLastImage[1], anchor='ne');
 
 drawer = DrawImage(canvas, images, root.winfo_width()/2, root.winfo_height()/2);
 
