@@ -22,7 +22,7 @@ def setImageSize(percent, windowWidth, windowHeight, imageWidth, imageHeight):
 	if wsize > 3*windowWidth/5:
 		return setImageSize(percent - 1, windowWidth, windowHeight, imageWidth, imageHeight);
 	else:
-		return (baseheight, wsize);
+		return baseheight, wsize;
 
 
 if len(sys.argv) != 2:
@@ -95,13 +95,9 @@ for i in range(1, int(numberOfTxtFiles)):
 		firstLastImage.append(img);
 	
 	initialPercent = 11
-	(baseheight, wsize) = setImageSize(initialPercent, root.winfo_width(), root.winfo_height(), image.size[0], image.size[1]);
-#	baseheight = 11*root.winfo_height()/12;
-#	hpercent = (baseheight/float(image.size[1]));
-#	wsize = int((float(image.size[0])*float(hpercent)));
-		
+	baseheight, wsize = setImageSize(initialPercent, root.winfo_width(), root.winfo_height(), image.size[0], image.size[1]);
+	
 	image = image.resize((wsize, baseheight), Image.ANTIALIAS);
-
 	image = ImageTk.PhotoImage(image);
 	
 	if i != 2:
