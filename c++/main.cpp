@@ -1,6 +1,8 @@
 #include <iostream>
 #include <sys/stat.h>
+#include <time.h>
 #include "tree.h"
+#include <random>
 
 using namespace std;
 
@@ -18,6 +20,17 @@ int jednaka (Node *g1, Node *g2)
     return jednaka(g1->left, g2->left) && jednaka(g1->right, g2->right);
 }
 
+void generateTree (Tree &tree, unsigned long n) {
+    vector<int> nums(n);
+    std::iota (std::begin(nums), std::end(nums), 1);
+
+    for (unsigned long i = 0; i < n; i++) {
+        int index = rand() % nums.size();
+        tree.addNumber(nums[index]);
+        nums.erase(nums.begin() + index);
+    }
+}
+
 int main()
 {
     mkdir("../files", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
@@ -25,63 +38,98 @@ int main()
     mkdir("../files/dot_files", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
     mkdir("../files/png_files", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 
-    Tree *t = new Tree();
-    Tree *t2 = new Tree();
+    std::string name = "../stats.txt";
+    QString filename = name.c_str();
+    QFile file(filename);
 
-    t->addNumber(10);
-    t->addNumber(7);
-    t->addNumber(5);
-    t->addNumber(4);
-    t->addNumber(9);
-    t->addNumber(15);
-    t->addNumber(13);
-    t->addNumber(17);
-    t->addNumber(6);
+    if ( file.open(QIODevice::ReadWrite | QIODevice::Truncate) ){
+        QTextStream stream( &file );
 
-    t2->addNumber(7);
-    t2->addNumber(9);
-    t2->addNumber(5);
-    t2->addNumber(4);
-    t2->addNumber(10);
-    t2->addNumber(15);
-    t2->addNumber(13);
-    t2->addNumber(17);
-    t2->addNumber(6);
+        for (int i = 0; i < 4000; i++) {
+            Tree *t = new Tree();
+            Tree *t2 = new Tree();
 
-//    t->addNumber(2);
-//    t->addNumber(10);
-//    t->addNumber(5);
-//    t->addNumber(3);
-//    t->addNumber(7);
-//    t->addNumber(9);
+            unsigned int time_ui = static_cast<unsigned int>( time(NULL) );
+            srand(time_ui);
 
-//    t2->addNumber(7);
-//    t2->addNumber(9);
-//    t2->addNumber(3);
-//    t2->addNumber(5);
-//    t2->addNumber(10);
-//    t2->addNumber(2);
+        //    t->addNumber(10);
+        //    t->addNumber(7);
+        //    t->addNumber(5);
+        //    t->addNumber(4);
+        //    t->addNumber(9);
+        //    t->addNumber(15);
+        //    t->addNumber(13);
+        //    t->addNumber(17);
+        //    t->addNumber(6);
 
-//    t->addNumber(1);
-//    t->addNumber(4);
+        //    t2->addNumber(7);
+        //    t2->addNumber(9);
+        //    t2->addNumber(5);
+        //    t2->addNumber(4);
+        //    t2->addNumber(10);
+        //    t2->addNumber(15);
+        //    t2->addNumber(13);
+        //    t2->addNumber(17);
+        //    t2->addNumber(6);
 
-//    t2->addNumber(4);
-//    t2->addNumber(1);
+        //    t->addNumber(5);
+        //    t->addNumber(3);
+        //    t->addNumber(1);
+        //    t->addNumber(4);
+        //    t->addNumber(6);
 
-    t->writeToFile();
-    t2->writeToFile();
+        //    t2->addNumber(3);
+        //    t2->addNumber(1);
+        //    t2->addNumber(5);
+        //    t2->addNumber(4);
+        //    t2->addNumber(6);
+
+        //    t->addNumber(2);
+        //    t->addNumber(10);
+        //    t->addNumber(5);
+        //    t->addNumber(3);
+        //    t->addNumber(7);
+        //    t->addNumber(9);
+
+        //    t2->addNumber(7);
+        //    t2->addNumber(9);
+        //    t2->addNumber(3);
+        //    t2->addNumber(5);
+        //    t2->addNumber(10);
+        //    t2->addNumber(2);
+
+        //    t->addNumber(1);
+        //    t->addNumber(4);
+
+        //    t2->addNumber(4);
+        //    t2->addNumber(1);
+
+            unsigned long n = 400;
+            generateTree(*t, n);
+            generateTree(*t2, n);
+
+        //    t->writeToFile();
+        //    t2->writeToFile();
 
 
-    t->rotateRight();
-    t->rotateLeft(*t2);
+            clock_t tStart = clock();
+            t->rotateRight();
+            t->rotateLeft(*t2);
+//            printf("Time taken: %fs\n", (double)(clock() - tStart)/(CLOCKS_PER_SEC/1000));
 
-    cout << jednaka(t->getRoot(), t2->getRoot()) << endl;
+            stream << (double)(clock() - tStart)/(CLOCKS_PER_SEC/1000) << ", ";
 
-    delete t;
-    delete t2;
+            cout << jednaka(t->getRoot(), t2->getRoot()) << endl;
+
+            delete t;
+            delete t2;
+        }
+
+        file.close();
+    }
 
     string command = "python ../python/draw_graph.py " + to_string(Tree::counter);
-    system(command.c_str());
+//    system(command.c_str());
     return 0;
 }
 

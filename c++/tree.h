@@ -28,7 +28,7 @@ public:
     void addNode(Node **root, int number);
     Node *getRoot() { return root; }
     void freeTree(Node *root);
-    void rotateOnce(Node **node);
+    void rotateRightOnce(Node **node);
     void rotateRight();
     void rotateLeft(Tree &t2);
     void rotateLeftOnce(Node **root, Node *root2);

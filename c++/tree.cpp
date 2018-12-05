@@ -105,7 +105,7 @@ void Tree::freeTree(Node *root)
     }
 }
 
-void Tree::rotateOnce(Node **node)
+void Tree::rotateRightOnce(Node **node)
 {
     if ((*node)->left) {
         Node *tmp = (*node)->right;
@@ -121,22 +121,28 @@ void Tree::rotateOnce(Node **node)
 void Tree::rotateRight()
 {
     while (root->left) {
-        rotateOnce(&root);
-        writeToFile();
+        rotateRightOnce(&root);
+//        writeToFile();
     }
     Node *rootPom1 = root;
     Node *rootPom2 = root->right;
 
     while (rootPom1->right) {
         while (rootPom2 && rootPom2->left) {
-            rotateOnce(&rootPom2);
+            rotateRightOnce(&rootPom2);
         }
         rootPom1->right = rootPom2;
         rootPom1 = rootPom1->right;
         if (rootPom2)
             rootPom2 = rootPom2->right;
-        writeToFile();
+//        writeToFile();
     }
+}
+
+void Tree::rotateLeft(Tree &t2)
+{
+    Node *node2 = t2.root;
+    rotateLeftOnce(&root, node2);
 }
 
 void Tree::rotateLeftOnce(Node **root, Node *root2)
@@ -149,16 +155,10 @@ void Tree::rotateLeftOnce(Node **root, Node *root2)
         Node *pom2 = findLeftSubTree(*root, root2->number);
         *root = pom;
         (*root)->left = pom2;
-        writeToFile();
+//        writeToFile();
     }
     rotateLeftOnce(&(*root)->left, root2->left);
     rotateLeftOnce(&(*root)->right, root2->right);
-}
-
-void Tree::rotateLeft(Tree &t2)
-{
-    Node *node2 = t2.root;
-    rotateLeftOnce(&root, node2);
 }
 
 Node *Tree::findNode(Node *root, int number)

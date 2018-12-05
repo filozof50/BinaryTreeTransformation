@@ -32,7 +32,7 @@ for i in range(1, int(numberOfTxtFiles)):
         
         if tree == previousTree:
 		print "hi, im on i = " + str(i)
-		shouldDraw = False;
+	#	shouldDraw = False;
     	
 	previousTree = tree;
 
