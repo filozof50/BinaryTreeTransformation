@@ -122,7 +122,7 @@ void Tree::rotateRight()
 {
     while (root->left) {
         rotateRightOnce(&root);
-//        writeToFile();
+        writeToFile();
     }
     Node *rootPom1 = root;
     Node *rootPom2 = root->right;
@@ -135,7 +135,7 @@ void Tree::rotateRight()
         rootPom1 = rootPom1->right;
         if (rootPom2)
             rootPom2 = rootPom2->right;
-//        writeToFile();
+        writeToFile();
     }
 }
 
@@ -155,7 +155,7 @@ void Tree::rotateLeftOnce(Node **root, Node *root2)
         Node *pom2 = findLeftSubTree(*root, root2->number);
         *root = pom;
         (*root)->left = pom2;
-//        writeToFile();
+        writeToFile();
     }
     rotateLeftOnce(&(*root)->left, root2->left);
     rotateLeftOnce(&(*root)->right, root2->right);

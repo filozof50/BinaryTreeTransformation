@@ -10,6 +10,8 @@ def createButton(root, canvas, text, drawer, location):
 		button = Button(root, text = text, command = drawer.draw_new, anchor = W)
 	elif text == "Loop":
 		button = Button(root, text = text, command = drawer.draw_new_timer, anchor = W)
+	elif text == "Stop":
+		button = Button(root, text = text, command = drawer.stop, anchor = W)
 	else:
 		button = Button(root, text = text, command = root.quit, anchor = W)
 	button.configure(width = 10, activebackground = "#33B5E5", relief = RAISED)
@@ -30,6 +32,7 @@ if len(sys.argv) != 2:
 	exit();
 
 numberOfTxtFiles = sys.argv[1];
+after_id = None;
 
 class DrawImage:
         def __init__(self, canvas, images, x, y):
@@ -61,6 +64,7 @@ class DrawImage:
                 print "drew image at i = " , self.counter
 
         def draw_new_timer(self):
+	    global after_id;
 	    if (self.counter + 1 <= len(self.images) - 1):
 	    	self.counter += 1
 	    if self.counter < len(self.images):
@@ -68,10 +72,16 @@ class DrawImage:
 		self.canvas.delete("deleteMe");
                 self.canvas.create_image((self.x, self.y), tags = "deleteMe", image = self.image, anchor='center');
                 print "drew image at i = " , self.counter
-                self.canvas.after(5000, self.draw_new_timer);
+                after_id = self.canvas.after(5000, self.draw_new_timer);
+
+	def stop(self):
+	    global after_id
+	    if after_id:
+		self.canvas.after_cancel(after_id)
+		after_id = None
 
 root = Tk();
-root.title("Balls");
+root.title("Binary Tree Transformer");
 root.geometry("{0}x{1}+0+0".format(7*root.winfo_screenwidth()/8, 4*root.winfo_screenheight()/5));
 root.update();
 root.resizable(False, False);
@@ -111,6 +121,7 @@ drawer = DrawImage(canvas, images, root.winfo_width()/2, root.winfo_height()/2);
 createButton(root, canvas, "Previous", drawer, 0);
 createButton(root, canvas, "Next", drawer, 120);
 createButton(root, canvas, "Loop", drawer, 240);
-createButton(root, canvas, "Exit", drawer, 360);
+createButton(root, canvas, "Stop", drawer, 360);
+createButton(root, canvas, "Exit", drawer, 480);
 
 root.mainloop();

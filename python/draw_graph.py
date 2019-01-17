@@ -32,7 +32,7 @@ for i in range(1, int(numberOfTxtFiles)):
         
         if tree == previousTree:
 		print "hi, im on i = " + str(i)
-	#	shouldDraw = False;
+		shouldDraw = False;
     	
 	previousTree = tree;
 
@@ -42,6 +42,7 @@ for i in range(1, int(numberOfTxtFiles)):
 
 		for key, value in tree.iteritems():
 			if len(value) == 2:
+				# file.write(str(key) + " [style=filled, fillcolor=red]\n") primer za bojenje cvora 
 				file.write(str(key) + " -- " + str(value[0]) + "\n")
 				file.write("center" + str(j) + ' [style=invis, width=0, label=""]\n')
 				file.write(str(key) + " -- " + "center" + str(j) + " [style=invis]\n")
